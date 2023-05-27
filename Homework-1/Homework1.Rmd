@@ -1,0 +1,40 @@
+                             HOMEWORK 1
+                             
+                      Jose Pablo Recinos Guzman
+
+```{r}
+pesos <- c(runif(25,min = 160, max = 200))
+pesos
+
+matriz_pesos <- matrix(pesos, byrow = TRUE, nrow = 5)
+matriz_pesos
+
+meses <- c("Enero", "Febrero", "Marzo", "Abril", "Mayo")
+meses
+
+colnames(matriz_pesos) <- meses
+matriz_pesos
+
+nombres <- c("Pablo", "Luis", "Maria", "Juan", "Diana")
+nombres
+
+rownames(matriz_pesos) <- nombres
+matriz_pesos
+
+PromedioPorPersona <- rowMeans(matriz_pesos)
+PromedioPorPersona
+
+
+matriz_nueva <- cbind(matriz_pesos,PromedioPorPersona)
+matriz_nueva
+
+
+PromedioPorMes <- colMeans(matriz_nueva[,c(1,2,3,4,5,6)])
+PromedioPorMes
+
+matriz_resultante <- rbind(matriz_nueva,PromedioPorMes )
+matriz_resultante
+
+```
+
+
