@@ -1,0 +1,84 @@
+                                    **FUNCIONES EN R**
+                                    
+
+Estructura de una función
+
+La estructura de una función en R studio es la siguiente:
+
+nombre_de_la_funcion <- function(argumento1, argumento2, ...) {
+  # Cuerpo de la función
+  # Código que realiza las operaciones deseadas
+  
+  # Valor de retorno (opcional)
+  return(valor_de_retorno)
+}
+
+nombre_de_la_funcion: es el nombre que se le da a la función.
+
+argumento1, argumento2, ...: son los argumentos de la función, se pueden crear los que sean necesarios.
+
+return(valor_de_retorno): se utiliza para devolver un valor como resultado de la función.
+
+Ejemplo de una función:
+
+```{r}
+sumar <- function(a, b) {
+  resultado <- a + b
+  return(resultado)
+}
+
+sumar(5,2)
+```
+Argumentos de una función.
+
+Son variables que se utilizan para recibir valores desde fuera de la función y luego utilizarlos dentro del cuerpo de la misma. Los argumentos permiten que una función sea más flexible y reutilizable, ya que pueden tomar diferentes valores cada vez que se llama a la función.
+
+Argumentos por valor
+
+Es cuando se pasa un argumento a una función, se crea una copia del valor y se trabaja con esa copia dentro de la función. Cualquier modificación realizada en la copia del valor no afecta al valor original fuera de la función. Esto se debe al mecanismo de "copia en escritura" que utiliza R para ahorrar memoria y mejorar el rendimiento. En resumen, los argumentos por valor en R garantizan que los valores originales no sean modificados por la función.
+
+
+
+```{r}
+modificar_valor <- function(x) {
+  x <- x + 1
+  return(x)
+}
+```
+
+Familia apply
+Proporciona una forma compacta y eficiente de aplicar una función a una estructura de datos, como una matriz, un marco de datos o una lista, a lo largo de una dimensión específica.
+
+lapply: Aplica una función a cada elemento de una lista y devuelve una lista con los resultados.
+sapply: Es similar a lapply(), pero intenta simplificar el resultado a un vector o matriz si es posible.
+vapply: se utiliza para aplicar una función a una estructura de datos y obtener un vector de resultados con un tipo de datos específico.
+
+```{r}
+numeros <- list(2, 4, 6, 8, 10)
+calcular_cuadrado <- function(x) {
+  return(x^2)
+}
+resultados <- lapply(numeros, calcular_cuadrado)
+print(resultados)
+```
+
+```{r}
+numeros <- c(2, 4, 6, 8, 10)
+calcular_log <- function(x) {
+  return(log(x))
+}
+resultados <- sapply(numeros, calcular_log)
+
+```
+
+```{r}
+numeros <- list(2, 4, 6, 8, 10)
+calcular_doble <- function(x) {
+  return(2 * x)
+}
+resultados <- vapply(numeros, calcular_doble, numeric(1))
+print(resultados)
+
+```
+
+
