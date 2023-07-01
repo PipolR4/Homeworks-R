@@ -1,0 +1,42 @@
+
+                             HOMEWORK 3
+                             
+                      Jose Pablo Recinos Guzman
+```{r}
+library(tidyverse)
+library(gapminder)
+library(dplyr)
+library(ggplot2)
+dataset_results <- read_csv("primary_results.csv",show_col_types = FALSE)
+dataset_results
+
+filtrado <- dataset_results %>%
+  filter(state=="Florida")
+print(filtrado)
+
+filtradodos<- dataset_results %>%
+  filter(candidate=="Hillary Clinton" | candidate =="Donald Trump")
+print(filtradodos)
+
+filtradotres<- dataset_results %>%
+  filter(county=="Shelby" & party =="Democrat")
+print(filtradotres)
+
+filtradocuatro<- dataset_results %>%
+  filter(state=="Texas" & votes>15000 )
+print(filtradocuatro)
+
+
+seleccionuno<- dataset_results[order(dataset_results$votes, decreasing = TRUE), ] %>%
+  filter(state=="Texas" )%>%
+  select(party, candidate, votes)
+print(seleccionuno)
+
+selecciondos <- dataset_results %>%
+  filter(party == "Republican" & candidate == "Ted Cruz" & state == "Alaska")%>%
+  mutate (vote_count = votes/fraction_votes)%>%
+  arrange(vote_count)
+
+print(selecciondos)
+```
+
