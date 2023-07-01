@@ -1,0 +1,82 @@
+                             HOMEWORK 4
+                             
+                      Jose Pablo Recinos Guzman
+```{r}
+library(tidyverse)
+library(gapminder)
+library(dplyr)
+library(ggplot2)
+diamonds <- read_csv("diamonds.csv",show_col_types = FALSE)
+str(diamonds)
+
+#1.1
+ggplot(data=diamonds)+
+  geom_point(aes(x=carat, y=price)) 
+
+#1.2 y 1.3
+ggplot(data=diamonds)+
+  geom_point(aes(x=carat, y=price, color=clarity)) 
+
+
+#2.1
+ggplot(data=diamonds)+
+  geom_histogram(aes(x = price),bins = 40, color= "blue", fill= "red")
+
+#2.2
+ggplot(data=diamonds)+
+  geom_histogram(aes(x = price),bins = 40, color= "blue", fill= "red")+
+  scale_x_log10() 
+
+#3.1
+ggplot(data=diamonds)+
+  geom_boxplot(aes(x=cut, y=price))+
+  scale_y_log10()
+
+#3.2
+ggplot(data=diamonds)+
+  geom_boxplot(aes(x=cut, y=price,fill=cut))+
+  scale_y_log10()+
+  scale_fill_manual(values = c("red", "green", "blue","black","purple"))
+
+#4.1
+filtered_price <- diamonds %>%
+  select(price,cut,depth,clarity)
+
+nombres_cut <- c("Good", "Ideal", "Premium")
+
+filtered_price  %>%
+  filter(price > 1000, cut %in% nombres_cut)
+
+
+#4.2
+ggplot(filtered_price, aes(x = cut, y = depth)) +
+  geom_bar(stat = "identity")
+
+#4.3
+ggplot(filtered_price, aes(x = cut, y = depth)) +
+  geom_bar(stat = "identity")+
+  facet_wrap(~ clarity)
+
+#4.4
+ggplot(filtered_price, aes(x = cut, y = depth, fill=clarity)) +
+  geom_bar(stat = "identity")+
+  facet_wrap(~ clarity)
+
+
+#Parte Grouping and summarizing
+median_dimension_diamond <- diamonds %>%
+  group_by(cut) %>%
+  summarize( mediaX = mean(x),  mediaY = mean(y),  mediaZ = mean(z))
+print(median_dimension_diamond)
+
+cut_premium <- diamonds %>%
+  filter(cut=="Premium") %>%
+  group_by(clarity) %>%
+  summarize( minPrice = min(price),  maxPrice = max(price))
+print(cut_premium)
+
+ggplot(cut_premium, aes(x = clarity, y = maxPrice, fill=clarity)) +
+  geom_bar(stat = "identity")
+
+```
+
