@@ -1,0 +1,69 @@
+                             HOMEWORK 5
+                             
+                      Jose Pablo Recinos Guzman
+
+```{r}
+library(tidyverse)
+library(dplyr)
+
+questions <- read.csv("questions.csv")
+answers <- read.csv("answers.csv")
+tags <- read.csv("tags.csv")
+question_tags <- read.csv("question_tags.csv")
+
+# 1.Utilice left_joins en este ejercicio para asegurarse de mantener todas las preguntas, incluso
+#aquellas sin un tag correspondiente.
+
+questions_with_tags <- left_join(questions, question_tags, by = c("id" = "question_id"))
+questions_with_tags <- left_join(questions_with_tags, tags, by = c("tag_id" = "id"))
+
+questions_with_tags$tag_name <- replace_na(questions_with_tags$tag_name, "only-r")
+
+print(questions_with_tags)
+
+# 2. El score promedio de las preguntas más frecuentes
+
+tag_scores <- questions_with_tags %>%
+  group_by(tag_name) %>%
+  summarize(mean_score = mean(score)) %>%
+  arrange(desc(mean_score))
+print(tag_scores)
+
+# 3.  Uniremos questions con answers
+#Las columnas tienen que ser de tipo numerico que serian fechas = date
+str(questions)
+str(questions)
+str(answers)
+
+
+# 4. Unir los conteos de respuestas con la tabla de preguntas.
+
+answer_counts <- answers %>%
+  count(question_id) %>%
+  arrange(question_id)
+
+print(answer_counts)
+
+question_answer_counts <- left_join(questions, answer_counts, by = c("id" = "question_id"))
+question_answer_counts$n <- replace_na(question_answer_counts$n, 0)
+
+
+# 5.
+# Se creo una columna para question_tags y question_answer_counts llamada "id"
+
+question_tags <- question_tags %>%
+  mutate(id = question_id)
+
+
+question_answer_counts <- question_answer_counts %>%
+  mutate(id = id)
+
+#Se combino questions, answers y tags.
+
+combined_data <- inner_join(question_tags, question_answer_counts, by = c("question_id" = "id")) %>%
+  inner_join(tags, by = "id")
+print(combined_data)
+
+```
+
+
